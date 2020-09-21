@@ -6,7 +6,9 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReadCsv {
 
@@ -27,6 +29,28 @@ public class ReadCsv {
 
         // return the new list 
         return newList;
+    }
+
+    private static double get_Max(double[] arr) {
+        double max = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) {
+                max = arr[i];
+            } else {
+            }
+        }
+        return max;
+    }
+
+    private static double get_Min(double[] arr) {
+        double min = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < min) {
+                min = arr[i];
+            } else {
+            }
+        }
+        return min;
     }
 
     private static void read_data(String path) {
@@ -84,10 +108,26 @@ public class ReadCsv {
                 }
             }
             ArrayList<String> newlist = removeDuplicates((ArrayList) list);
+            Map<Double, String> map = null;
+
+            double max = get_Max(balance);
+            double min = get_Min(balance);
+
             for (int i = 0; i < newlist.size(); i++) {
-                //System.out.println(newlist.get(i) + "\t" + balance[i]);
                 pw.println(newlist.get(i) + "\t\t" + balance[i]);
+                map = new HashMap<>();
             }
+            for (int i = 0; i < newlist.size(); i++) {
+                map.put(balance[i], newlist.get(i));
+            }
+            pw.println("=================================");
+            pw.println("Max balance for all accounts");
+            pw.println("=================================");
+            pw.println(map.get(max) + "\t\t" + max);
+            pw.println("=================================");
+            pw.println("Min balance for all accounts");
+            pw.println("=================================");
+            pw.println(map.get(min) + "\t\t" + min);
             pw.close();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
